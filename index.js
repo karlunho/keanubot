@@ -29,10 +29,10 @@ var apiapp = apiai(config.APIAI_TOKEN);
  * Receive a Slash Command request from Slack.
  *
  * Trigger this function by making a POST request with a payload to:
- * https://[YOUR_REGION].[YOUR_PROJECT_ID].cloudfunctions.net/kgsearch
+ * https://[YOUR_REGION].[YOUR_PROJECT_ID].cloudfunctions.net/keanubotwebhook
  *
  * @example
- * curl -X POST "https://us-central1.your-project-id.cloudfunctions.net/kgSearch" --data '{"token":"[YOUR_SLACK_TOKEN]","text":"giraffe"}'
+ * curl -X POST "https://[YOUR_REGION].[YOUR_PROJECT_ID].cloudfunctions.net/keanubotwebhook" --data '{"token":"[YOUR_SLACK_TOKEN]","text":"whoa"}'
  *
  * @param {object} req Cloud Function request object.
  * @param {object} req.body The request payload.
