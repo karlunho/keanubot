@@ -1,0 +1,86 @@
+{
+  "userSays": [
+    {
+      "id": "b39baf01-1961-4774-96e3-16186ae41afa",
+      "data": [
+        {
+          "text": "I can\u0027t come into work"
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "47a17afb-4f0a-408a-8e91-4a02312f2439",
+      "data": [
+        {
+          "text": "my car broke down"
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "a16ae225-17d3-47ae-b8eb-945b2c281bb4",
+      "data": [
+        {
+          "text": "my daughter is sick"
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "f4af7de6-bcf4-4324-8ae7-1e35d361c707",
+      "data": [
+        {
+          "text": "My son is sick"
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "a6c6f409-43eb-4ca3-a239-d67f3d259f0f",
+      "data": [
+        {
+          "text": "That\u0027s terrible"
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "28792f6f-58ed-40c1-a7df-8af043a707f7",
+      "data": [
+        {
+          "text": "I\u0027m sorry"
+        }
+      ],
+      "isTemplate": false,
+      "count": 1
+    }
+  ],
+  "id": "667abcb2-66ec-4579-bef6-07456f1c8dac",
+  "name": "Bogus",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "speech": "http://www.joblo.com/newsimages1/BT_3_bogus.jpg"
+        }
+      ]
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": []
+}

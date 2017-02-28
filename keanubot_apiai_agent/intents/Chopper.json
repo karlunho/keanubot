@@ -1,0 +1,36 @@
+{
+  "userSays": [
+    {
+      "id": "ff39f563-210d-4c28-8e5a-718b32b16efc",
+      "data": [
+        {
+          "text": "Get home now"
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    }
+  ],
+  "id": "20950a07-43ba-4a7d-b3a6-f477932a7876",
+  "name": "Chopper",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "speech": "Get to the chopper, https://i.ytimg.com/vi/MF-afbGRyWg/hqdefault.jpg"
+        }
+      ]
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": []
+}

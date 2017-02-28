@@ -1,0 +1,46 @@
+{
+  "userSays": [
+    {
+      "id": "40e9bea3-65b7-4bab-a02d-a18d0196d8a5",
+      "data": [
+        {
+          "text": "How are we doing ?"
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "1eade191-5c3c-44a8-bdb7-d2d91824615c",
+      "data": [
+        {
+          "text": "How are you doing ?"
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    }
+  ],
+  "id": "8235b6e3-ad2e-44a8-ac33-b78922816440",
+  "name": "How are we doing",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "speech": "Main power offline..... EMP armed, https://s-media-cache-ak0.pinimg.com/originals/76/2d/fb/762dfb7a70561f92f097085a7b69830b.jpg"
+        }
+      ]
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": []
+}

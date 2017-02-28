@@ -1,0 +1,46 @@
+{
+  "userSays": [
+    {
+      "id": "2e0d66bf-5bb9-43c3-a9f7-29c669e3df79",
+      "data": [
+        {
+          "text": "That\u0027s odd"
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "6df456c9-6165-48e2-9d3c-5d5aa00ab954",
+      "data": [
+        {
+          "text": "That\u0027s strange"
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    }
+  ],
+  "id": "f1182614-0089-46b9-beb3-ff0d3c8563a7",
+  "name": "StrangeCircleK",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "speech": "https://media.giphy.com/media/T0pXBBbZvYbcY/giphy.gif"
+        }
+      ]
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": []
+}

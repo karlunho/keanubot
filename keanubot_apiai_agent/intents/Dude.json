@@ -1,0 +1,36 @@
+{
+  "userSays": [
+    {
+      "id": "c4a3111f-2a81-4c58-8bb2-42d68d7ce661",
+      "data": [
+        {
+          "text": "Dude"
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    }
+  ],
+  "id": "945563fd-0d2f-4abd-b4fb-c6e01ef9cec1",
+  "name": "Dude",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "speech": "https://www.youtube.com/watch?v\u003dkR4y0KhdcNY"
+        }
+      ]
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": []
+}

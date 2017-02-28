@@ -1,0 +1,89 @@
+{
+  "userSays": [
+    {
+      "id": "865bef0d-4822-4a3f-8dba-aed52d7d71a9",
+      "data": [
+        {
+          "text": "great"
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "58841a1c-88c3-4fe6-bc06-b906e4aa00cc",
+      "data": [
+        {
+          "text": "whoa"
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "89ba072f-9cd5-4d76-93b6-e0b66dfc8be9",
+      "data": [
+        {
+          "text": "whao"
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "8f9b4111-d46e-4b85-8cd1-37c4e5aaefd7",
+      "data": [
+        {
+          "text": "that\u0027s amazing"
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "a96898ca-a9a3-4a6d-aca0-dc98f72dfaf4",
+      "data": [
+        {
+          "text": "that\u0027s crazy"
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "5cab0987-7df0-462c-adcc-62b42995ba5a",
+      "data": [
+        {
+          "text": "amazing"
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    }
+  ],
+  "id": "a277f2a5-6c1b-407c-9d79-1dcc55659651",
+  "name": "Whoa",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "speech": [
+            "whoa, https://i.imgur.com/7j15tXU.jpg",
+            "whoa, https://media1.giphy.com/media/w42xflWoSjDj2/200_s.gif"
+          ]
+        }
+      ]
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": []
+}

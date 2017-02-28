@@ -1,0 +1,46 @@
+{
+  "userSays": [
+    {
+      "id": "50fbe443-5735-4aff-8dc0-c91c845ad5c5",
+      "data": [
+        {
+          "text": "That is not acceptable"
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "92f6bf46-1327-4462-8ec6-93ae2cd8acfa",
+      "data": [
+        {
+          "text": "you missed the deadline"
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    }
+  ],
+  "id": "7d70b974-687c-4e5d-aae6-ce17b243cd2c",
+  "name": "CrossLine",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "speech": "You crossed the line Bohdi. People trusted you and they died. You gotta\u0027 go down.,http://static.rogerebert.com/uploads/movie/movie_poster/point-break-1991/large_qzKNI8b8EZZhwGFqPavPO04abf.jpg"
+        }
+      ]
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": []
+}
