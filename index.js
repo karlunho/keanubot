@@ -128,9 +128,6 @@ function processEvent(event) {
 
 /**
  * @param {object} req Cloud Function request object.
- * @param {object} req.body The request payload.
- * @param {string} req.body.token Slack's verification token.
- * @param {string} req.body.text The user's search query.
  * @param {object} res Cloud Function response object.
  */
 function handler(req, res) {
