@@ -1,15 +1,16 @@
 {
-  "name": "keanubot",
+  "name": "keanu-bot",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
+  "license": "Apache-2.0",
+  "author": "John Agan <john@slack-corp.com>",
   "dependencies": {
-    "googleapis": "^16.1.0",    
-    "apiai": "3.0.2"
+    "apiai": "^4.0.0",
+    "axios": "^0.15.3",
+    "debug": "^2.6.1"
+  },
+  "devDependencies": {
+    "body-parser": "^1.17.0",
+    "express": "^4.15.0"
   }
 }

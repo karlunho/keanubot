@@ -13,158 +13,154 @@
  * limitations under the License.
  */
 
-'use strict';
+'use strict'
 
-// [START functions_slack_setup]
-const config = require('./config.json');
+const debug = require('debug')('keanu-bot'),
+  config = require('./config.json'),
+  apiai = require('apiai'),
+  axios = require('axios')
 
-var apiai = require('apiai');
-var apiapp = apiai(config.APIAI_TOKEN);
+// api.ai client
+const apiapp = apiai(config.APIAI_TOKEN)
+
+// slack client
+const slack = axios.create({
+  params: { token: config.SLACK_TOKEN },
+  baseURL: 'https://slack.com/api/',
+  headers: { 'User-Agent': 'keanu-bot' }
+})
 
 
-// [END functions_slack_setup]
-
-// [START functions_slack_search]
 /**
- * Receive a Slash Command request from Slack.
- *
- * Trigger this function by making a POST request with a payload to:
- * https://[YOUR_REGION].[YOUR_PROJECT_ID].cloudfunctions.net/keanubotwebhook
- *
- * @example
- * curl -X POST "https://[YOUR_REGION].[YOUR_PROJECT_ID].cloudfunctions.net/keanubotwebhook" --data '{"token":"[YOUR_SLACK_TOKEN]","text":"whoa"}'
- *
+ * Post a message to Slack
+ * 
+ * @param {string} channel - the channel id to post to
+ * @param {object} fields - the response fields to post
+ * @returns A Promise with the http response
+ */
+function respondInSlack(channel, fields) {
+  debug('building slack message\n%O', fields)
+
+  let attachment = {
+    color: '#3367d6',
+    text: fields.text,
+    image_url: fields.url,
+    fallback: "whoa"
+  }
+  debug('slack attachment\n%O', attachment)
+
+  let params = {
+    channel: channel,
+    attachments: JSON.stringify([attachment])
+  }
+
+  debug('sending slack message\n%O', params)
+  return slack.get('chat.postMessage', { params })
+}
+
+
+/**
+ * Send text request to api.ai
+ * 
+ * @param {string} text - the text to submit
+ * @returns A Promise with the response result
+ */
+function sendToAPIAI(text) {
+  debug('sending text', text)
+
+  let sessionId = new Date().getTime()
+  let request = apiapp.textRequest(text, { sessionId })
+  request.end()
+
+  return new Promise((resolve, reject) => {
+    // successful response
+    request.on('response', response => {
+      debug('response\n%O', response)
+      resolve(response.result)
+    })
+
+    // error
+    request.on('error', error => {
+      debug('error\n%O', error)
+      reject(error)
+    })
+  })
+}
+
+
+/**
+ * Parse api.ai result
+ * 
+ * @param {object} result - api.ai response result
+ * @returns A Promise with the parsed fields
+ */
+function parseResponse(result) {
+  debug('parsing result\n%O', result)
+  let { score, fulfillment } = result
+
+  // no match
+  if (score <= 0.1) return Promise.reject()
+
+  // parse text and url from the speech
+  let fields = {}
+  fulfillment.speech.split(',').forEach(text => {
+    if (!text.match(/(?:jpeg|jpg|gif|png)$/i)) fields.text = text
+    else fields.url = text.replace(/ /g, '')
+  })
+
+  debug('return fields\n%O', fields)
+  return Promise.resolve(fields)
+}
+
+
+/**
+ * Process a Slack event
+ * 
+ * @param {object} event - the Slack message event
+ * @returns A Promise with the event results
+ */
+function processEvent(event) {
+  let { channel, text } = event
+  let respond = respondInSlack.bind(null, channel)
+  return sendToAPIAI(text).then(parseResponse).then(respond)
+}
+
+
+/**
  * @param {object} req Cloud Function request object.
  * @param {object} req.body The request payload.
  * @param {string} req.body.token Slack's verification token.
  * @param {string} req.body.text The user's search query.
  * @param {object} res Cloud Function response object.
  */
-exports.keanubotwebhook = function keanubotwebhook (req, res) {
+function handler(req, res) {
+  debug('payload received\n%O', req.body)
 
-  if(verifyWebhook(req.body)) {
-    handleSlackEvent(req.body, function(body) {
-      res.status(200).send(body);
-    });
-  } else {
-    res.status(401).send('Could not verify Webhook');
+  let { token, challenge, event } = req.body
+
+  // verify slack request token
+  if (token !== config.VERIFICATION_TOKEN) {
+    debug('invalid verification token', token)
+    return res.status(401).send('Invalid request')
   }
 
-};
-// [END functions_slack_search]
-
-// [START functions_verify_webhook]
-/**
- * Verify that the webhook request came from Slack.
- *
- * @param {object} body The body of the request.
- * @param {string} body.token The Slack token to be verified.
- */
-function verifyWebhook (body) {
-
-  console.log("Slack Token: " + JSON.stringify(body));
-
-  console.log("OK:" + JSON.stringify(body.token));
-
-  if (!body || body.token !== config.SLACK_TOKEN) {
-    return false;
-  } else {
-    return true;
+  // slack events api challenge request
+  if (challenge) {
+    debug('challenge request', challenge)
+    return res.send(challenge)
   }
-}
-// [END functions_verify_webhook]
 
-function handleSlackEvent(event,callback)
-{
-    console.log("Handling Slack Webhook");
-    //console.log(event);
-    console.log(JSON.stringify(event));
-
-    var conversationRawText = event.text;
-
-    if(event.user_name != "keanubot" && event.user_name != "slackbot"){
-
-      var request = apiapp.textRequest(conversationRawText, {
-        sessionId: "12312"
-      });
-
-      request.on('response', function(response) {
-        console.log(JSON.stringify(response));
-        if (response.result.score > 0.1)
-        {
-
-          console.log("Autoreplying to user: " + response.result.fulfillment.speech);
-          var slackMessage = formatSlackMessage(response.result.fulfillment.speech);
-          console.log(JSON.stringify(slackMessage));
-          //client.conversations.reply(reply, callback);
-          callback(slackMessage);
-        }
-      });
-
-      request.on('error', function(error) {
-          console.log(error);
-          callback();
-      });
-
-      request.end();
-    } else {
-      callback();
-    }
-}
-
-// [START functions_slack_format]
-/**
- * Format the API.ai response into a richly formatted Slack message.
- *
- * @param {object} response The speech response from the API.ai. This is assumed
- * to be a text or picture, or both with a ',' as the seperator
- * @returns {object} The formatted message.
- */
-function formatSlackMessage (response) {
-
-
-  // Prepare a rich Slack message
-  // See https://api.slack.com/docs/message-formatting
-  var slackMessage = {
-    response_type: 'in_channel',
-    attachments: []
-  };
-
-  if(response.match(','))
-  {
-    console.log("Found a ,");
-    var responses = response.split(',');
-    if(responses.length == 2)
-    {
-      slackMessage["text"] = responses[0];
-      slackMessage.attachments.push(createAttachment(responses[1]));
-    }
-  } else {
-    if (response.match('(?:jpg|gif|png)$')) {
-      slackMessage.attachments.push(createAttachment(response));
-    } else {
-      slackMessage["text"] = response;
-    }
+  // ignore bot events
+  if (event && event.bot_id) {
+    debug('bot event ignored', event.bot_id)
+    return res.status(200)
   }
-  return slackMessage;
+
+  // process the event
+  let complete = () => res.send()
+  processEvent(event).then(complete).catch(complete)
 }
 
-function createAttachment(imageURL)
-{
-  const attachment = {
-    color: '#3367d6',
-    image_url: imageURL.replace(/ /g,''),
-    title: "",
-    title_link:"",
-    text: ""
-  }
-  return attachment;
-}
 
-// [END functions_slack_format]
-
-
-
-exports.localTestEvent = function localTestEvent(event,callback) {
-  handleSlackEvent(event,callback);
-};
+// public endpoint
+exports.handler = handler

@@ -1,19 +1,31 @@
 # keanubot
-Let the most excellent Keanu improve your group chat conversations
+Let the most excellent Keanu improve your Slack conversations
 
-Instructions:
+![Excellent](https://cloud.githubusercontent.com/assets/35968/23574957/3c4cd150-003a-11e7-96c2-2a3e0df7df2c.png)
 
-1. Using your slack and API.ai credentials, create a config.json file. Use
-the config.default.json as a guide.
+## Config Variables
+Name | Description
+---|---
+`APIAI_TOKEN` | The api.ai [access token](https://docs.api.ai/docs/authentication)
+`SLACK_TOKEN` | The Slack Bot token 
+`VERIFICATION_TOKEN` | The Slack verification token
 
-2. Deploy the app to CloudFunctions :
+## Instructions:
 
-gcloud alpha functions deploy keanubotwebhook --stage-bucket <YOUR_CLOUD_STORAGE> --trigger-http
+1. Create a [Slack App](./slack.md) and install it on your team
 
-3. Trigger your CloudFunctions
+2. Using your Slack and API.ai credentials, create a config.json file. Use
+the [config.default.json](./config.default.json) as a guide.
 
-curl -X POST "https://[YOUR_REGION].[YOUR_PROJECT_ID].cloudfunctions.net/keanubotwebhook" --data '{"token":"[YOUR_SLACK_TOKEN]","text":"whoa"}'
+3. Deploy the app to CloudFunctions :
+```
+gcloud alpha functions deploy keanubot --stage-bucket <YOUR_CLOUD_STORAGE> --trigger-http
+```
 
-4. Hook your CloudFunction to your Slack Outbound Webhook
+4. Trigger your CloudFunctions
+```
+curl -X POST "https://[YOUR_REGION].[YOUR_PROJECT_ID].cloudfunctions.net/keanubot" --data '[Slack Message Event]'
+```
 
-https://api.slack.com/outgoing-webhooks
+5. Invite your bot into a channel or send messages to it
+![](https://cloud.githubusercontent.com/assets/35968/23574948/14166368-003a-11e7-94ed-1cf585dbb2e8.png)
