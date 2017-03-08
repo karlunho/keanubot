@@ -15,8 +15,7 @@
 
 'use strict'
 
-const debug = require('debug')('keanu-bot'),
-  config = require('./config.json'),
+const config = require('./config.json'),
   apiai = require('apiai'),
   axios = require('axios')
 
@@ -39,7 +38,7 @@ const slack = axios.create({
  * @returns A Promise with the http response
  */
 function respondInSlack(channel, fields) {
-  debug('building slack message\n%O', fields)
+  console.log('building slack message\n%O', fields)
 
   let attachment = {
     color: '#3367d6',
@@ -47,14 +46,14 @@ function respondInSlack(channel, fields) {
     image_url: fields.url,
     fallback: "whoa"
   }
-  debug('slack attachment\n%O', attachment)
+  console.log('slack attachment\n%O', attachment)
 
   let params = {
     channel: channel,
     attachments: JSON.stringify([attachment])
   }
 
-  debug('sending slack message\n%O', params)
+  console.log('sending slack message\n%O', params)
   return slack.get('chat.postMessage', { params })
 }
 
@@ -66,7 +65,7 @@ function respondInSlack(channel, fields) {
  * @returns A Promise with the response result
  */
 function sendToAPIAI(text) {
-  debug('sending text', text)
+  console.log('sending text', text)
 
   let sessionId = new Date().getTime()
   let request = apiapp.textRequest(text, { sessionId })
@@ -75,13 +74,13 @@ function sendToAPIAI(text) {
   return new Promise((resolve, reject) => {
     // successful response
     request.on('response', response => {
-      debug('response\n%O', response)
+      console.log('response\n%O', response)
       resolve(response.result)
     })
 
     // error
     request.on('error', error => {
-      debug('error\n%O', error)
+      console.log('error\n%O', error)
       reject(error)
     })
   })
@@ -95,7 +94,7 @@ function sendToAPIAI(text) {
  * @returns A Promise with the parsed fields
  */
 function parseResponse(result) {
-  debug('parsing result\n%O', result)
+  console.log('parsing result\n%O', result)
   let { score, fulfillment } = result
 
   // no match
@@ -108,7 +107,7 @@ function parseResponse(result) {
     else fields.url = text.replace(/ /g, '')
   })
 
-  debug('return fields\n%O', fields)
+  console.log('return fields\n%O', fields)
   return Promise.resolve(fields)
 }
 
@@ -131,26 +130,32 @@ function processEvent(event) {
  * @param {object} res Cloud Function response object.
  */
 function handler(req, res) {
-  debug('payload received\n%O', req.body)
+  console.log('payload received\n%O', req.body)
 
   let { token, challenge, event } = req.body
 
+  // ignore retries
+  if (req.headers["X-Slack-Retry-Num"]) {
+    console.log('ignoring event api retry', req.headers["X-Slack-Retry-Num"])
+    return res.send()
+  }
+
   // verify slack request token
   if (token !== config.VERIFICATION_TOKEN) {
-    debug('invalid verification token', token)
+    console.log('invalid verification token', token)
     return res.status(401).send('Invalid request')
   }
 
   // slack events api challenge request
   if (challenge) {
-    debug('challenge request', challenge)
+    console.log('challenge request', challenge)
     return res.send(challenge)
   }
 
   // ignore bot events
   if (event && event.bot_id) {
-    debug('bot event ignored', event.bot_id)
-    return res.status(200)
+    console.log('bot event ignored', event.bot_id)
+    return res.send()
   }
 
   // process the event
