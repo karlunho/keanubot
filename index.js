@@ -99,7 +99,7 @@ function parseResponse(result) {
   let { score, fulfillment } = result
 
   // no match
-  if (score <= 0.) return Promise.reject()
+  if (score <= 0.5) return Promise.reject()
 
   // parse text and url from the speech
   let fields = {}
@@ -154,7 +154,7 @@ function handler(req, res) {
   }
 
   // ignore bot events
-  
+
   if (event && event.bot_id) {
     console.log('bot event ignored', event.bot_id)
     return res.send()
