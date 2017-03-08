@@ -32,7 +32,7 @@ const slack = axios.create({
 
 /**
  * Post a message to Slack
- * 
+ *
  * @param {string} channel - the channel id to post to
  * @param {object} fields - the response fields to post
  * @returns A Promise with the http response
@@ -50,6 +50,7 @@ function respondInSlack(channel, fields) {
 
   let params = {
     channel: channel,
+    text: fields.text,
     attachments: JSON.stringify([attachment])
   }
 
@@ -60,7 +61,7 @@ function respondInSlack(channel, fields) {
 
 /**
  * Send text request to api.ai
- * 
+ *
  * @param {string} text - the text to submit
  * @returns A Promise with the response result
  */
@@ -89,7 +90,7 @@ function sendToAPIAI(text) {
 
 /**
  * Parse api.ai result
- * 
+ *
  * @param {object} result - api.ai response result
  * @returns A Promise with the parsed fields
  */
@@ -98,7 +99,7 @@ function parseResponse(result) {
   let { score, fulfillment } = result
 
   // no match
-  if (score <= 0.1) return Promise.reject()
+  if (score <= 0.) return Promise.reject()
 
   // parse text and url from the speech
   let fields = {}
@@ -114,7 +115,7 @@ function parseResponse(result) {
 
 /**
  * Process a Slack event
- * 
+ *
  * @param {object} event - the Slack message event
  * @returns A Promise with the event results
  */
@@ -153,6 +154,7 @@ function handler(req, res) {
   }
 
   // ignore bot events
+  
   if (event && event.bot_id) {
     console.log('bot event ignored', event.bot_id)
     return res.send()
