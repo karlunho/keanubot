@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "Apache-2.0",
-  "author": "John Agan <john@slack-corp.com>",
+  "author": "Bret McGowen (https://twitter.com/bretmcg)",
   "dependencies": {
-    "apiai": "^4.0.0",
-    "axios": "^0.15.3"
+    "apiai": "^4.0.3",
+    "axios": "^0.15.3",
+    "dotenv": "^4.0.0"
   },
   "devDependencies": {
     "body-parser": "^1.17.0",

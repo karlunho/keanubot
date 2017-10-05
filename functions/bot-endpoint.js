@@ -13,18 +13,19 @@
  * limitations under the License.
  */
 
+ // Based on code from: https://github.com/karlunho/keanubot
+
 'use strict'
 
-const config = require('./config.json'),
-  apiai = require('apiai'),
-  axios = require('axios')
+const apiai = require('apiai'),
+  axios = require('axios');
 
 // api.ai client
-const apiapp = apiai(config.APIAI_TOKEN)
+const apiapp = apiai(process.env.APIAI_TOKEN)
 
 // slack client
 const slack = axios.create({
-  params: { token: config.SLACK_TOKEN },
+  params: { token: process.env.SLACK_BOT_TOKEN },
   baseURL: 'https://slack.com/api/',
   headers: { 'User-Agent': 'keanu-bot' }
 })
@@ -42,7 +43,7 @@ function respondInSlack(channel, fields) {
 
   let attachment = {
     color: '#3367d6',
-    text: fields.text,
+    fallback: fields.text,
     image_url: fields.url,
     fallback: "whoa"
   }
@@ -130,8 +131,8 @@ function processEvent(event) {
  * @param {object} req Cloud Function request object.
  * @param {object} res Cloud Function response object.
  */
-function handler(req, res) {
-  console.log('payload received\n%O', req.body)
+exports.handler = function handler(req, res) {
+  console.log('payload received\n%O', JSON.stringify(req.body,null,'\t'));
 
   let { token, challenge, event } = req.body
 
@@ -142,7 +143,7 @@ function handler(req, res) {
   }
 
   // verify slack request token
-  if (token !== config.VERIFICATION_TOKEN) {
+  if (token !== process.env.SLACK_VERIFICATION_TOKEN) {
     console.log('invalid verification token', token)
     return res.status(401).send('Invalid request')
   }
@@ -164,7 +165,3 @@ function handler(req, res) {
   let complete = () => res.send()
   processEvent(event).then(complete).catch(complete)
 }
-
-
-// public endpoint
-exports.handler = handler

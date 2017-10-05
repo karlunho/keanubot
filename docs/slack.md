@@ -1,4 +1,9 @@
-## Create an App
+## Create a Slack workspace
+Skip this step if you already have a Slack workspace. Or, [create a new workspace](https://slack.com/create).
+
+## Create a Slack App
+Go to [https://api.slack.com/apps](https://api.slack.com/apps)
+
 ![](https://cloud.githubusercontent.com/assets/35968/23514852/6ccfa492-ff1d-11e6-954b-c02e28b83bd5.png)
 ![](https://cloud.githubusercontent.com/assets/35968/23514854/6cedf3fc-ff1d-11e6-8f12-3cee55f152eb.png)
 
@@ -8,7 +13,7 @@
 
 ## Subscribe to Events
 ![](https://cloud.githubusercontent.com/assets/35968/23514855/6d09918e-ff1d-11e6-98e7-2dce125f5122.png)
-![](https://cloud.githubusercontent.com/assets/35968/23514853/6ce54586-ff1d-11e6-9f53-946dc0ed49fa.png)
+![](./img/slack_event_subscription.png)
 
 ## Install the App
 ![](https://cloud.githubusercontent.com/assets/35968/23514858/6d752f5c-ff1d-11e6-9457-8396713707fa.png)
